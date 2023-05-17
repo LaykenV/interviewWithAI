@@ -1,4 +1,3 @@
-import React from "react";
 import pic from "../assets/react.svg";
 import Box from "@mui/material/Box";
 import Stack from "@mui/material/Stack";

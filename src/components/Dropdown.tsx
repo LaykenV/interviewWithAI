@@ -17,10 +17,10 @@ const Dropdown = () => {
             <FormControl>
                 <InputLabel id="jobInput">Job Title</InputLabel>
                 <Select labelId="jobInput" id="jobSelector" value={interviewJob} label="jobTitle" onChange={handleChangeJob}>
-                    <MenuItem value={"1"}>Front End Developer</MenuItem>
-                    <MenuItem value={"2"}>Back End Developer</MenuItem>
-                    <MenuItem value={"3"}>Full Stack Developer</MenuItem>
-                    <MenuItem value={"4"}>Behavioral Questions</MenuItem>
+                    <MenuItem value={"Front End React Developer"}>Front End React Developer</MenuItem>
+                    <MenuItem value={"Front End Angular Developer"}>Front End Angular Developer</MenuItem>
+                    <MenuItem value={"Back End Developer"}>Back End Developer</MenuItem>
+                    <MenuItem value={"Full Stack Developer"}>Full Stack Developer</MenuItem>
                 </Select>
             </FormControl>
         </Box>

@@ -5,7 +5,7 @@ import { interviewContext } from "../interviewContext";
 
 const Chips = () => {
     const { interviewLevel, setInterviewLevel } = useContext(interviewContext);
-    const [selectedChip, setSelectedChip] = useState("1");
+    const [selectedChip, setSelectedChip] = useState("Junior");
 
     useEffect(() => {
         setInterviewLevel(selectedChip);
@@ -13,9 +13,9 @@ const Chips = () => {
 
     return(
         <Stack>
-            <Chip label="Junior" onClick={() => {setSelectedChip("1")}}></Chip>
-            <Chip label="Mid-Level" onClick={() => {setSelectedChip("2")}}></Chip>
-            <Chip label="Senior" onClick={() => {setSelectedChip("3")}}></Chip>
+            <Chip label="Junior" onClick={() => {setSelectedChip("Junior")}}></Chip>
+            <Chip label="Mid-Level" onClick={() => {setSelectedChip("Mid-Level")}}></Chip>
+            <Chip label="Senior" onClick={() => {setSelectedChip("Senior")}}></Chip>
         </Stack>
 
     )

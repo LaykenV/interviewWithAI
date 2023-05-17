@@ -1,4 +1,4 @@
-import React, { createContext, useEffect, useState, SetStateAction, Dispatch } from "react";
+import { createContext, useEffect, useState, SetStateAction, Dispatch } from "react";
 
 export interface IInterviewContext {
     interviewJob: string;
@@ -6,13 +6,13 @@ export interface IInterviewContext {
     interviewLevel: string,
     setInterviewLevel: Dispatch<SetStateAction<string>>,
     questions: string[],
-    setQuestions: Dispatch<SetStateAction<never[]>>,
+    setQuestions: Dispatch<SetStateAction<any>>,
     answers: string[],
-    setAnswers: Dispatch<SetStateAction<never[]>>,
+    setAnswers: Dispatch<SetStateAction<any>>,
     scores: string[],
-    setScores: Dispatch<SetStateAction<never[]>>,
+    setScores: Dispatch<SetStateAction<any>>,
     feedback: string[],
-    setFeedback: Dispatch<SetStateAction<never[]>>,
+    setFeedback: Dispatch<SetStateAction<any>>,
 }
 
 const interviewContext = createContext<IInterviewContext>({
