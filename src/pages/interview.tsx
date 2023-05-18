@@ -8,6 +8,7 @@ import { Formik, Form, FormikHelpers, useFormik } from "formik";
 import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import TypewriterComponent from "typewriter-effect";
+import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
 
 
 interface Values {
@@ -15,7 +16,7 @@ interface Values {
 }
 
 const validationSchema = yup.object({
-    answer: yup.string().max(100, "answer should be 100 characters max").required("Answer is Required")
+    answer: yup.string().max(1000, "answer should be 100 characters max").required("Answer is Required")
 });
 
 
@@ -24,7 +25,7 @@ const Interview = () => {
     const [questionNumber, setQuestionNumber] = useState(0 as number);
     const navigate = useNavigate();
     const synthesis = window.speechSynthesis;
-    const recognition = new webkitSpeechRecognition();
+    const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition, isMicrophoneAvailable } = useSpeechRecognition();
 
     useEffect(() => {
         const utterance = new SpeechSynthesisUtterance(questions[questionNumber]);
@@ -36,6 +37,7 @@ const Interview = () => {
         utterance.rate = 1.25;
         utterance.volume = 0.8;
         synthesis.speak(utterance);
+        resetTranscript();
     }, [questionNumber]);
 
     useEffect(() => {
@@ -47,13 +49,14 @@ const Interview = () => {
         utterance.pitch = 1.5;
         utterance.rate = 1;
         utterance.volume = 0.8;
-        synthesis.speak(utterance);
+        synthesis.speak(utterance);        
     }, [questions]);
 
     const formik = useFormik({
         initialValues: {
-            answer: "",
+            answer: transcript,
         },
+        enableReinitialize: true,
         validationSchema: validationSchema,
         onSubmit: (values: Values) => {
             console.log(values.answer);
@@ -96,9 +99,15 @@ const Interview = () => {
  
             </Box>
             <form onSubmit={formik.handleSubmit}>
-            <TextField id="answer" name="answer" label="answer" value={formik.values.answer} onChange={formik.handleChange} error={formik.touched.answer && Boolean(formik.errors.answer)} helperText={formik.touched.answer && formik.errors.answer}>Answer</TextField>
+            <TextField id="answer" name="answer" label="answer" value={formik.values.answer} onChange={formik.handleChange} error={formik.touched.answer && Boolean(formik.errors.answer)} helperText={formik.touched.answer && formik.errors.answer}></TextField>
             <Stack>
-                <Box>Microphone</Box>
+                <Button 
+                onTouchStart={() => {SpeechRecognition.startListening({ continuous: true })}} 
+                onMouseDown={() => {SpeechRecognition.startListening({ continuous: true })}} 
+                onTouchEnd={() => {SpeechRecognition.stopListening()}}
+                onMouseUp={() => {SpeechRecognition.stopListening()}}
+                >Microphone {listening ? "on" : "off"} {isMicrophoneAvailable ? "allowed" : "not allowed"}</Button>
+                <Box onClick={() => {resetTranscript()}}>Reset</Box>
                 <Button type="submit"> Next Question / Finish Interview </Button>
             </Stack>
             </form>
