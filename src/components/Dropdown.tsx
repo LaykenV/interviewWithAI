@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import Box from '@mui/material/Box';
+import {Box, TextField, useTheme} from '@mui/material';
 import InputLabel from '@mui/material/InputLabel';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
@@ -8,22 +8,20 @@ import { interviewContext } from "../interviewContext";
 
 const Dropdown = () => {
     const { interviewJob, setInterviewJob } = useContext(interviewContext);
+    const theme = useTheme();
 
     const handleChangeJob = (event: SelectChangeEvent) => {
         setInterviewJob(event.target.value as string);
     }
     return(
-        <Box>
-            <FormControl>
-                <InputLabel id="jobInput">Job Title</InputLabel>
-                <Select labelId="jobInput" id="jobSelector" value={interviewJob} label="jobTitle" onChange={handleChangeJob}>
+            <FormControl sx={{width: "50%"}}>
+                <Select labelId="jobInput" notched={false} label="Job Title" id="jobSelector" value={interviewJob} onChange={handleChangeJob} sx={{backgroundColor: theme.palette.common.white}}>
                     <MenuItem value={"Front End React Developer"}>Front End React Developer</MenuItem>
                     <MenuItem value={"Front End Angular Developer"}>Front End Angular Developer</MenuItem>
                     <MenuItem value={"Back End Developer"}>Back End Developer</MenuItem>
                     <MenuItem value={"Full Stack Developer"}>Full Stack Developer</MenuItem>
                 </Select>
             </FormControl>
-        </Box>
     )
 };
 

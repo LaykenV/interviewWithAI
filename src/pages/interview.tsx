@@ -1,4 +1,4 @@
-import Box from "@mui/material/Box";
+import {Box} from '@mui/material';
 import Stack from "@mui/material/Stack";
 import { useContext, useEffect, useState } from "react";
 import { interviewContext } from "../interviewContext";
