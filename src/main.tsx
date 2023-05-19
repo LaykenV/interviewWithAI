@@ -1,14 +1,21 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import {
-  createBrowserRouter,
-  RouterProvider,
-} from "react-router-dom";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './index.css'
 import {LandingPage} from "./pages/LandingPage";
 import { Interview } from './pages/Interview';
 import { PostInterview } from './pages/PostInterview';
 import { InterviewProvider } from './interviewContext';
+import { ThemeProvider, createTheme } from "@mui/material/styles";
+
+const darkTheme = createTheme({
+  palette: {
+    mode: 'dark',
+  },
+});
+
+const theme = createTheme();
+
 
 const router = createBrowserRouter([
   {
@@ -28,7 +35,9 @@ const router = createBrowserRouter([
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   //<React.StrictMode>
     <InterviewProvider>
-      <RouterProvider router={router} />
+      <ThemeProvider theme={theme}>
+        <RouterProvider router={router} />
+      </ThemeProvider>
     </InterviewProvider>
   //</React.StrictMode>,
 )
