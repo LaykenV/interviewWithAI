@@ -1,14 +1,25 @@
-import {Box} from '@mui/material';
+import {Box, Typography} from '@mui/material';
 import Stack from "@mui/material/Stack";
 import { useContext, useEffect, useState } from "react";
 import { interviewContext } from "../interviewContext";
 import { reactQuestions, angularQuestions, behavioralQuestions } from "../data/interviewQuestions";
-import { Button, TextField } from "@mui/material";
+import { Button, TextField, AppBar, Toolbar, Avatar } from "@mui/material";
 import { Formik, Form, FormikHelpers, useFormik } from "formik";
 import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import TypewriterComponent from "typewriter-effect";
 import SpeechRecognition, { useSpeechRecognition } from "react-speech-recognition";
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import selfie from "../assets/IMG_2253.jpg";
+import GitHubIcon from '@mui/icons-material/GitHub';
+import RestartAltIcon from '@mui/icons-material/RestartAlt';
+import MicIcon from '@mui/icons-material/Mic';
+import './css/microphone.css';
+import SendIcon from '@mui/icons-material/Send';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+
+
 
 
 interface Values {
@@ -26,6 +37,8 @@ const Interview = () => {
     const navigate = useNavigate();
     const synthesis = window.speechSynthesis;
     const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition, isMicrophoneAvailable } = useSpeechRecognition();
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
 
     useEffect(() => {
         const utterance = new SpeechSynthesisUtterance(questions[questionNumber]);
@@ -83,34 +96,103 @@ const Interview = () => {
             navigate("/interviewAnalysis");
         }
     }, [questionNumber]);
+
+    const openTab = (url:string) => {
+        window.open(url);
+    };
+
+    if (isMedium) {
+        return(
+            <Stack sx={{height: '100vh', width: '100vw'}} justifyContent="flex-start" alignItems="center">
+            <AppBar position="static" sx={{bgcolor: theme.palette.primary.main}}>
+                <Toolbar>
+                    <Box sx={{fontSize: "large", color: theme.palette.common.white, flexGrow: 1}} onClick={() => { openTab('')}}>Interview With AI</Box>
+                    <Stack direction="row" gap="45px">
+                        <Avatar src={selfie} sx={{height: "40px", width: "40px", cursor: "pointer"}} onClick={() => { openTab("https://laykenv.github.io/portfolio/") }}></Avatar>
+                        <Stack justifyContent="center" alignItems="center">
+                            <GitHubIcon fontSize="large" sx={{height: "40px", width: "40px", cursor: "pointer"}} onClick={() => { openTab("https://github.com/LaykenV/interviewWithAI") }}></GitHubIcon>
+                        </Stack>
+                    </Stack>
+                </Toolbar>
+            </AppBar>
+            <Stack sx={{flexGrow: 1, width: '100%', backgroundColor: theme.palette.grey[200]}} justifyContent='center' alignItems='center'>
+                <Stack sx={{height: '80%', width: '90%', border: '1px solid lightgray', borderRadius: '5px', backgroundColor: theme.palette.common.white}} justifyContent='flex-start' alignItems='center'>
+                    <Stack direction='row' justifyContent='space-between' alignItems='center' sx={{width: '95%', height: '10%'}}>
+                        <Box sx={{fontSize: 'small', fontWeight: 'bold'}}>{interviewLevel} {interviewJob} Interview</Box>
+                        <Box sx={{fontSize: 'large', fontWeight: 'bold'}}> {questionNumber + 1} / 5</Box>
+                    </Stack>
+                    <Stack sx={{height: '20%', width: '80%', textAlign: 'center', fontSize: 'medium', fontWeight: '500'}} justifyContent='center' alignItems='center'>
+                    { questions[1] && questionNumber === 0 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null }
+                    { questions[1] && questionNumber === 1 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null } 
+                    { questions[1] && questionNumber === 2 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null } 
+                    { questions[1] && questionNumber === 3 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null } 
+                    { questions[1] && questionNumber === 4 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null } 
+                    </Stack>
+                    <form onSubmit={formik.handleSubmit} id='myForm' style={{height: '50%', width: '90%', position: 'relative', border: `1px solid ${theme.palette.primary.main}`, borderRadius: '5px'}}>
+                        <TextField id="answer" sx={{height: '100%', width: '100%', '> div > fieldset': {border: 'none'}}} name="answer" multiline={true} minRows={10} value={formik.values.answer} onChange={formik.handleChange} error={formik.touched.answer && Boolean(formik.errors.answer)} helperText={formik.touched.answer && formik.errors.answer}></TextField>
+                        <Box onClick={transcript == '' ? () => {formik.resetForm()} : () => {resetTranscript()}} sx={{position: 'absolute', top: '5px', right: '5px', zIndex: 111, cursor: 'pointer'}}><RestartAltIcon></RestartAltIcon></Box>
+                    </form>
+                    <Stack direction='row' justifyContent='center' alignItems='center' sx={{width: '90%', height: "15%"}}>
+                        <Stack sx={{width: '67%', height: '90%'}} justifyContent='center' alignItems='center'>
+                            <Button sx={{flexGrow: 1, outlineStyle: 'none !important', borderRadius: '20%'}} className={listening ? 'animate' : ''} onTouchStart={() => {SpeechRecognition.startListening({continuous: true })}} onTouchEnd={() => {SpeechRecognition.stopListening()}}>
+                                <MicIcon sx={{height: '100%'}}></MicIcon>
+                            </Button>
+                            <Typography variant='subtitle1' sx={{fontSize: 'small', textAlign: 'center'}}>Hold The Microphone to Start Recording</Typography>
+                        </Stack>
+                        <Stack sx={{width: '33%'}} justifyContent='flex-end' alignItems='center' direction='row'>
+                            <Button type="submit" sx={{fontSize: 'small'}} form='myForm' variant='contained' endIcon={ questionNumber === 4 ? <CheckCircleOutlineIcon></CheckCircleOutlineIcon> : <SendIcon></SendIcon>}> { questionNumber === 4 ? 'Finish' : 'Next' } </Button>
+                        </Stack>
+                    </Stack>
+                </Stack>
+            </Stack>
+        </Stack>
+        )
+    }
     
     return(
-        <Stack>
-            <Stack>
-                <Box>{interviewLevel} {interviewJob} Interview</Box>
-                <Box>Question {questionNumber + 1} / 5</Box>
+        <Stack sx={{height: '100vh', width: '100vw'}} justifyContent="flex-start" alignItems="center">
+            <AppBar position="static" sx={{bgcolor: theme.palette.primary.main}}>
+                <Toolbar>
+                    <Box sx={{fontSize: "large", color: theme.palette.common.white, flexGrow: 1}} onClick={() => { openTab('')}}>Interview With AI</Box>
+                    <Stack direction="row" gap="45px">
+                        <Avatar src={selfie} sx={{height: "40px", width: "40px", cursor: "pointer"}} onClick={() => { openTab("https://laykenv.github.io/portfolio/") }}></Avatar>
+                        <Stack justifyContent="center" alignItems="center">
+                            <GitHubIcon fontSize="large" sx={{height: "40px", width: "40px", cursor: "pointer"}} onClick={() => { openTab("https://github.com/LaykenV/interviewWithAI") }}></GitHubIcon>
+                        </Stack>
+                    </Stack>
+                </Toolbar>
+            </AppBar>
+            <Stack sx={{flexGrow: 1, width: '100%', backgroundColor: theme.palette.grey[200]}} justifyContent='center' alignItems='center'>
+                <Stack sx={{height: '80%', width: '90%', border: '1px solid lightgray', borderRadius: '5px', backgroundColor: theme.palette.common.white}} justifyContent='flex-start' alignItems='center'>
+                    <Stack direction='row' justifyContent='space-between' alignItems='center' sx={{width: '95%', height: '10%'}}>
+                        <Box sx={{fontSize: 'large', fontWeight: 'bold'}}>{interviewLevel} {interviewJob} Interview</Box>
+                        <Box sx={{fontSize: 'large', fontWeight: 'bold'}}> {questionNumber + 1} / 5</Box>
+                    </Stack>
+                    <Stack sx={{height: '20%', width: '80%', textAlign: 'center', fontSize: 'large', fontWeight: '500'}} justifyContent='center' alignItems='center'>
+                    { questions[1] && questionNumber === 0 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null }
+                    { questions[1] && questionNumber === 1 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null } 
+                    { questions[1] && questionNumber === 2 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null } 
+                    { questions[1] && questionNumber === 3 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null } 
+                    { questions[1] && questionNumber === 4 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null } 
+                    </Stack>
+                    <form onSubmit={formik.handleSubmit} id='myForm' style={{height: '50%', width: '90%', position: 'relative', border: `1px solid ${theme.palette.primary.main}`, borderRadius: '5px'}}>
+                        <TextField id="answer" sx={{height: '100%', width: '100%', '> div > fieldset': {border: 'none'}}} name="answer" multiline={true} minRows={10} value={formik.values.answer} onChange={formik.handleChange} error={formik.touched.answer && Boolean(formik.errors.answer)} helperText={formik.touched.answer && formik.errors.answer}></TextField>
+                        <Box onClick={transcript == '' ? () => {formik.resetForm()} : () => {resetTranscript()}} sx={{position: 'absolute', top: '5px', right: '5px', zIndex: 111, cursor: 'pointer'}}><RestartAltIcon></RestartAltIcon></Box>
+                    </form>
+                    <Stack direction='row' justifyContent='center' alignItems='center' sx={{width: '90%', height: "15%"}}>
+                        <Box sx={{width: '33%'}}></Box>
+                        <Stack sx={{width: '33%', height: '90%'}} justifyContent='center' alignItems='center'>
+                            <Button sx={{flexGrow: 1, outlineStyle: 'none !important', borderRadius: '30%'}} className={listening ? 'animate' : ''} onClick={listening ? () => {SpeechRecognition.stopListening()} : () => {SpeechRecognition.startListening({ continuous: true })}}>
+                                <MicIcon sx={{height: '100%'}}></MicIcon>
+                            </Button>
+                            <Typography variant='subtitle1'>Tap Microphone To { listening ? 'Stop' : 'Start'} Recording</Typography>
+                        </Stack>
+                        <Stack sx={{width: '33%'}} justifyContent='flex-end' alignItems='center' direction='row'>
+                            <Button type="submit" form='myForm' variant='contained' endIcon={ questionNumber === 4 ? <CheckCircleOutlineIcon></CheckCircleOutlineIcon> : <SendIcon></SendIcon>}> { questionNumber === 4 ? 'Finish Interview' : 'Next Question' } </Button>
+                        </Stack>
+                    </Stack>
+                </Stack>
             </Stack>
-            <Box>
-               { questions[1] && questionNumber === 0 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null }
-               { questions[1] && questionNumber === 1 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null } 
-               { questions[1] && questionNumber === 2 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null } 
-               { questions[1] && questionNumber === 3 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null } 
-               { questions[1] && questionNumber === 4 ? <TypewriterComponent onInit={(typewriter) => {typewriter.changeDelay(40).typeString(questions[questionNumber]).start()}}/> : null } 
- 
-            </Box>
-            <form onSubmit={formik.handleSubmit}>
-            <TextField id="answer" name="answer" label="answer" value={formik.values.answer} onChange={formik.handleChange} error={formik.touched.answer && Boolean(formik.errors.answer)} helperText={formik.touched.answer && formik.errors.answer}></TextField>
-            <Stack>
-                <Button 
-                onTouchStart={() => {SpeechRecognition.startListening({ continuous: true })}} 
-                onMouseDown={() => {SpeechRecognition.startListening({ continuous: true })}} 
-                onTouchEnd={() => {SpeechRecognition.stopListening()}}
-                onMouseUp={() => {SpeechRecognition.stopListening()}}
-                >Microphone {listening ? "on" : "off"} {isMicrophoneAvailable ? "allowed" : "not allowed"}</Button>
-                <Box onClick={() => {resetTranscript()}}>Reset</Box>
-                <Button type="submit"> Next Question / Finish Interview </Button>
-            </Stack>
-            </form>
         </Stack>
     )
 };
