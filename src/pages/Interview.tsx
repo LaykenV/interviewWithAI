@@ -18,7 +18,6 @@ import MicIcon from '@mui/icons-material/Mic';
 import './css/microphone.css';
 import SendIcon from '@mui/icons-material/Send';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import "regenerator-runtime/runtime";
 
 
 
