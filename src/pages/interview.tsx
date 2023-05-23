@@ -2,9 +2,9 @@ import {Box, Typography} from '@mui/material';
 import Stack from "@mui/material/Stack";
 import { useContext, useEffect, useState } from "react";
 import { interviewContext } from "../interviewContext";
-import { reactQuestions, angularQuestions, behavioralQuestions } from "../data/interviewQuestions";
+import {reactQuestions, angularQuestions, behavioralQuestions, seniorReactQuestions, seniorAngularQeustions, javaQuestions, seniorJavaQuestions, cQuestions, seniorCQuestions, pythonQuestions, seniorPythonQuestions, dataScientistQuestions, seniorDataScientistQuestions, devOpsQuestions, cyberQuestions, seniorCyberQuestions} from "../data/interviewQuestions";
 import { Button, TextField, AppBar, Toolbar, Avatar } from "@mui/material";
-import { Formik, Form, FormikHelpers, useFormik } from "formik";
+import { useFormik } from "formik";
 import * as yup from 'yup';
 import { useNavigate } from "react-router-dom";
 import TypewriterComponent from "typewriter-effect";
@@ -36,7 +36,7 @@ const Interview = () => {
     const [questionNumber, setQuestionNumber] = useState(0 as number);
     const navigate = useNavigate();
     const synthesis = window.speechSynthesis;
-    const { transcript, listening, resetTranscript, browserSupportsSpeechRecognition, isMicrophoneAvailable } = useSpeechRecognition();
+    const { transcript, listening, resetTranscript } = useSpeechRecognition();
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
 
@@ -72,7 +72,6 @@ const Interview = () => {
         enableReinitialize: true,
         validationSchema: validationSchema,
         onSubmit: (values: Values) => {
-            console.log(values.answer);
             const newAnswers = [...answers, values.answer]
             setAnswers(newAnswers);
             setQuestionNumber(prevState => prevState + 1);
@@ -82,12 +81,88 @@ const Interview = () => {
 
     useEffect(() => {
         const questions : string[] = [];
-        if (interviewJob === "Front End React Developer") {
+        questions.push(behavioralQuestions[Math.floor(Math.random() * behavioralQuestions.length)]);
+        if (interviewJob === "React" && interviewLevel === "Junior") {
             const shuffledQuestions = reactQuestions.sort(() => Math.random() - 0.5);
-            questions.push(behavioralQuestions[Math.floor(Math.random() * behavioralQuestions.length)]);
             questions.push(shuffledQuestions[0], shuffledQuestions[1], shuffledQuestions[2], shuffledQuestions[3]);
             setQuestions(questions);
-            console.log(questions);
+        }
+        if (interviewJob === "React" && interviewLevel === "Senior") {
+            const shuffledQuestions = reactQuestions.sort(() => Math.random() - 0.5);
+            const shuffledSenior = seniorReactQuestions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledSenior[0], shuffledSenior[1], shuffledQuestions[1]);
+            setQuestions(questions);
+        }
+        if (interviewJob === "Angular" && interviewLevel === "Junior") {
+            const shuffledQuestions = angularQuestions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledQuestions[1], shuffledQuestions[2], shuffledQuestions[3]);
+            setQuestions(questions);
+        }
+        if (interviewJob === "Angular" && interviewLevel === "Senior") {
+            const shuffledQuestions = angularQuestions.sort(() => Math.random() - 0.5);
+            const shuffledSenior = seniorAngularQeustions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledSenior[0], shuffledSenior[1], shuffledQuestions[1]);
+            setQuestions(questions);
+        }
+        if (interviewJob === "Java" && interviewLevel === "Junior") {
+            const shuffledQuestions = javaQuestions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledQuestions[1], shuffledQuestions[2], shuffledQuestions[3]);
+            setQuestions(questions);
+        }
+        if (interviewJob === "Java" && interviewLevel === "Senior") {
+            const shuffledQuestions = javaQuestions.sort(() => Math.random() - 0.5);
+            const shuffledSenior = seniorJavaQuestions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledSenior[0], shuffledSenior[1], shuffledQuestions[1]);
+            setQuestions(questions);
+        }
+        if (interviewJob === "C#" && interviewLevel === "Junior") {
+            const shuffledQuestions = cQuestions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledQuestions[1], shuffledQuestions[2], shuffledQuestions[3]);
+            setQuestions(questions);
+        }
+        if (interviewJob === "C#" && interviewLevel === "Senior") {
+            const shuffledQuestions = cQuestions.sort(() => Math.random() - 0.5);
+            const shuffledSenior = seniorCQuestions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledSenior[0], shuffledSenior[1], shuffledQuestions[1]);
+            setQuestions(questions);
+        }
+        if (interviewJob === "Python" && interviewLevel === "Junior") {
+            const shuffledQuestions = pythonQuestions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledQuestions[1], shuffledQuestions[2], shuffledQuestions[3]);
+            setQuestions(questions);
+        }
+        if (interviewJob === "Python" && interviewLevel === "Senior") {
+            const shuffledQuestions = pythonQuestions.sort(() => Math.random() - 0.5);
+            const shuffledSenior = seniorPythonQuestions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledSenior[0], shuffledSenior[1], shuffledQuestions[1]);
+            setQuestions(questions);
+        }
+        if (interviewJob === "Data Scientist" && interviewLevel === "Junior") {
+            const shuffledQuestions = dataScientistQuestions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledQuestions[1], shuffledQuestions[2], shuffledQuestions[3]);
+            setQuestions(questions);
+        }
+        if (interviewJob === "Data Scientist" && interviewLevel === "Senior") {
+            const shuffledQuestions = dataScientistQuestions.sort(() => Math.random() - 0.5);
+            const shuffledSenior = seniorDataScientistQuestions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledSenior[0], shuffledSenior[1], shuffledQuestions[1]);
+            setQuestions(questions);
+        }
+        if (interviewJob === "Cybersecurity" && interviewLevel === "Junior") {
+            const shuffledQuestions = cyberQuestions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledQuestions[1], shuffledQuestions[2], shuffledQuestions[3]);
+            setQuestions(questions);
+        }
+        if (interviewJob === "Cybersecurity" && interviewLevel === "Senior") {
+            const shuffledQuestions = cyberQuestions.sort(() => Math.random() - 0.5);
+            const shuffledSenior = seniorCyberQuestions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledSenior[0], shuffledSenior[1], shuffledQuestions[1]);
+            setQuestions(questions);
+        }
+        if (interviewJob === "DevOps") {
+            const shuffledQuestions = devOpsQuestions.sort(() => Math.random() - 0.5);
+            questions.push(shuffledQuestions[0], shuffledQuestions[1], shuffledQuestions[2], shuffledQuestions[3]);
+            setQuestions(questions);
         }
     }, [interviewJob]); 
 

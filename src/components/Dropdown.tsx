@@ -1,6 +1,5 @@
-import React, { useContext } from "react";
-import {Box, TextField, useTheme} from '@mui/material';
-import InputLabel from '@mui/material/InputLabel';
+import { useContext } from "react";
+import {useTheme} from '@mui/material';
 import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select, { SelectChangeEvent } from '@mui/material/Select';
@@ -19,10 +18,14 @@ const Dropdown = () => {
     return(
             <FormControl sx={{width: isMedium ? '80%' : "50%"}}>
                 <Select labelId="jobInput" notched={false} label="Job Title" id="jobSelector" value={interviewJob} onChange={handleChangeJob} sx={{backgroundColor: theme.palette.common.white}}>
-                    <MenuItem value={"Front End React Developer"}>Front End React Developer</MenuItem>
-                    <MenuItem value={"Front End Angular Developer"}>Front End Angular Developer</MenuItem>
-                    <MenuItem value={"Back End Developer"}>Back End Developer</MenuItem>
-                    <MenuItem value={"Full Stack Developer"}>Full Stack Developer</MenuItem>
+                    <MenuItem value={"React"}>React Developer</MenuItem>
+                    <MenuItem value={"Angular"}>Angular Developer</MenuItem>
+                    <MenuItem value={"Java"}>Java Developer</MenuItem>
+                    <MenuItem value={"C#"}>C# Developer</MenuItem>
+                    <MenuItem value={"Python"}>Python Developer</MenuItem>
+                    <MenuItem value={"Data Scientist"}>Data Scientist</MenuItem>
+                    <MenuItem value={"Cybersecurity"}>Cybersecurity Engineer</MenuItem>
+                    <MenuItem value={"DevOps"}>DevOps Engineer</MenuItem>
                 </Select>
             </FormControl>
     )

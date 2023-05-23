@@ -1,5 +1,4 @@
-import pic from "../assets/react.svg";
-import { Box, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import Stack from "@mui/material/Stack";
 
 export interface Props {

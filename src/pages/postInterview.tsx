@@ -1,63 +1,121 @@
-import { useEffect, useContext, useState } from "react";
+import { useContext } from "react";
 import { interviewContext } from "../interviewContext";
-import { OpenAIApi } from "openai";
-import axios from "axios";
+import { Avatar, Typography, Box, AppBar, Toolbar, Paper, Stack, Button } from "@mui/material";
+import { useTheme } from '@mui/material/styles';
+import useMediaQuery from '@mui/material/useMediaQuery';
+import Carousel from "react-material-ui-carousel";
+import selfie from "../assets/IMG_2253.jpg";
+import GitHubIcon from '@mui/icons-material/GitHub';
+import ReactLoading from 'react-loading';
+
+
+
+const FeedbackItem = (props:any) => {
+    const theme = useTheme();
+    const isMedium = useMediaQuery(theme.breakpoints.down("md"));
+
+    const capitalizeFirstLetter = (input: string): string => {
+        return input.charAt(0).toUpperCase() + input.slice(1);
+      }
+      
+
+    return (
+        <Paper sx={{height: "550px"}}>
+            <Stack sx={{width: '100%', height: '100%'}} direction='row' justifyContent='center' alignItems='flex-start' flexWrap='wrap'>
+                <Stack sx={{width: '49%', height: '40%'}} justifyContent='flex-start' alignItems='center' gap={isMedium ? '2px' : '10px'}>
+                    <Typography variant="h5" sx={{paddingTop: isMedium ? '5px' : '10px', borderBottom: '1px solid lightgray', fontSize: isMedium ? 'medium' : null}}>Question</Typography>
+                    <Typography variant="subtitle1" textAlign='center' sx={{padding: isMedium ? '5px' : '10px', fontSize: isMedium ? 'small' : null}}>{props.question}</Typography>
+                </Stack>
+                <Stack sx={{width: '49%', height: '40%', borderLeft: '1px solid lightgray'}} justifyContent='flex-start' alignItems='center' gap={isMedium ? '2px' : '10px'}>
+                    <Typography variant="h5" sx={{paddingTop: isMedium ? '5px' : '10px', borderBottom: '1px solid lightgray', fontSize: isMedium ? 'medium' : null}}>Your Answer</Typography>
+                    <Typography variant="subtitle1" textAlign='center' sx={{padding: isMedium ? '5px' : '10px', fontSize: isMedium ? 'small' : null}}>{capitalizeFirstLetter(props.answer)}</Typography>
+                </Stack>                
+                <Stack gap={isMedium ? '2px' : '10px'} sx={{width: '100%', height: '60%', backgroundColor: props.item.grade === 'good' ? theme.palette.success.light : theme.palette.error.light, borderRadius: '5px'}} justifyContent='flex-start' alignItems='center'>
+                    <Typography variant="h5" sx={{color: theme.palette.common.white, paddingTop: isMedium ? '5px' : '10px', fontSize: isMedium ? 'medium' : null, borderBottom: '1px solid white'}}>Feedback</Typography>
+                    <Typography variant="subtitle1" textAlign='center' sx={{color: theme.palette.common.white, padding: isMedium ? '5px' : '10px', fontSize: isMedium ? 'small' : null}} >{props.item.aiFeedback}</Typography>
+                </Stack>
+            </Stack>
+        </Paper>
+    )
+}
 
 
 const PostInterview = () => {
-    const {  questions,  answers } = useContext(interviewContext);
-    const [feedback, setFeedback] = useState([] as any[]);
-    const openAIKey = "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";
-    const client = axios.create({
-        headers: {
-            "Authorization": `Bearer ${openAIKey}`, 
-            "Content-Type": "application/json",
-        }
-    });
-
-    const fetchAnalysis = async (i:number) => {
-        const url = "https://api.openai.com/v1/completions";
-        const prompt1 = `I want you to act as a harsh interviewer for the role of Junior Front end react developer. I will give you a question and my answer to the question and I want you to respond with a number grade 0-100 for my answer as well as feedback on my answer. My goal is to improve my interview skills so do not be afraid to be harsh in the grading and feedback and include specific advice on what is wrong with my answer and how i could improve it. If my answer is bad or does not answer the question let me know that and give an example of a good answer. Question: ${questions[i]}. Answer: ${answers[i]}. Please provide your feedback first and the number grade as the last two characters of your response. example: "feedback xyz 55"`
-       const params = {
-            prompt: `Question ${questions[i]}. Answer ${answers[i]}. Analyze my answer and provide feedback on how i can improve it. My goal is to improve my answer to interview questions so be harsh in your analysis. If my answer is bad let me know that and give advice on how i can improve it in the future. Grade my answer as "good" or "bad". Return your response in JSON format. example: {"grade": "good", "feedback": "xyz"}.`,
-            model: "text-davinci-003",
-            max_tokens: 1250,
-            temperature: .5
-        }
-        
-        const response =  await client.post(url, params)
-        const jsonResponse = JSON.parse(response.data.choices[0].text);
-        setFeedback(prevState => [...prevState, jsonResponse]); 
-    }
-
-    useEffect(() => {
-        console.log(questions, answers);
-        const fetchAll = async () => {
-            for (let i = 0; i < answers.length; i++) {
-                await fetchAnalysis(i);
-            }
-        }
-        fetchAll();
-    }, []);
-
-    useEffect(() => {
-        console.log(feedback);
-        
-    }, [feedback])
+    const {  questions,  answers, feedback } = useContext(interviewContext);
+    const theme = useTheme();
     
+    const openTab = (url:string) => {
+        window.open(url);
+    };
+    
+    if (feedback.length < 5) {
+        return(
+            <Stack direction="column" justifyContent="flex-start" alignItems="center" sx={{minHeight: "100vh", width: "100vw", gap: "60px", bgcolor: theme.palette.grey[200]}}>
+            <AppBar position="static" sx={{bgcolor: theme.palette.primary.main}}>
+                <Toolbar>
+                    <Box sx={{fontSize: "large", color: theme.palette.common.white, flexGrow: 1}} onClick={() => { openTab('')}}>Interview With AI</Box>
+                    <Stack direction="row" gap="45px">
+                        <Avatar src={selfie} sx={{height: "40px", width: "40px", cursor: "pointer"}} onClick={() => { openTab("https://laykenv.github.io/portfolio/") }}></Avatar>
+                        <Stack justifyContent="center" alignItems="center">
+                            <GitHubIcon fontSize="large" sx={{height: "40px", width: "40px", cursor: "pointer"}} onClick={() => { openTab("https://github.com/LaykenV/interviewWithAI") }}></GitHubIcon>
+                        </Stack>
+                    </Stack>
+                </Toolbar>
+            </AppBar>
+            <Stack sx={{height: '100%', width: '100%', flexGrow: 1}} justifyContent='center' alignItems='center' gap='60px'>
+                <ReactLoading color={theme.palette.primary.main} width={100} height={100} type="spin"></ReactLoading>
+                <Stack sx={{height: '20px', width: '200px', backgroundColor: 'white', borderRadius: '20px'}} justifyContent='flex-start' direction='row' alignItems='center'>
+                    <Box sx={{height: '20px', width: `${(feedback.length / 5) * 100}%`, backgroundColor: theme.palette.primary.main, zIndex: 111, borderRadius: '20px'}}></Box>
+                </Stack>
+                <Typography variant="h6">Our AI is analyzing your answers...</Typography>
+            </Stack>
+        </Stack>
+            )
+        }
+        
+        const items:any[] = [
+            {
+                grade: feedback[0].grade,
+                aiFeedback: feedback[0].yourFeedback
+            },
+            {
+                grade: feedback[1].grade,
+                aiFeedback: feedback[1].yourFeedback
+            },
+            {
+                grade: feedback[2].grade,
+                aiFeedback: feedback[2].yourFeedback
+            },
+            {
+                grade: feedback[3].grade,
+                aiFeedback: feedback[3].yourFeedback
+            },
+            {
+                grade: feedback[4].grade,
+                aiFeedback: feedback[4].yourFeedback
+            }
+        ]
 
     return(
-        <div>
-            {feedback.map((card) => {
-                return(
-                    <div>
-                        <div>{card.grade}</div>
-                        <div>{card.feedback}</div>
-                    </div>
-                )
-            })}
-
-        </div>
+        <Stack direction="column" justifyContent="flex-start" alignItems="center" sx={{minHeight: "100vh", width: "100vw", gap: "60px", bgcolor: theme.palette.grey[200]}}>
+            <AppBar position="static" sx={{bgcolor: theme.palette.primary.main}}>
+                <Toolbar>
+                    <Box sx={{fontSize: "large", color: theme.palette.common.white, flexGrow: 1}} onClick={() => { openTab('')}}>Interview With AI</Box>
+                    <Stack direction="row" gap="45px">
+                        <Avatar src={selfie} sx={{height: "40px", width: "40px", cursor: "pointer"}} onClick={() => { openTab("https://laykenv.github.io/portfolio/") }}></Avatar>
+                        <Stack justifyContent="center" alignItems="center">
+                            <GitHubIcon fontSize="large" sx={{height: "40px", width: "40px", cursor: "pointer"}} onClick={() => { openTab("https://github.com/LaykenV/interviewWithAI") }}></GitHubIcon>
+                        </Stack>
+                    </Stack>
+                </Toolbar>
+            </AppBar>
+            <Carousel sx={{width: "80%"}} animation="slide" autoPlay={false}>
+            {
+                items.map( (item, i) => <FeedbackItem key={i} item={item} question={questions[i]} answer={answers[i]}/> )
+            }
+            </Carousel>
+            <Button onClick={() => {openTab('')}} variant="contained">Return Home</Button>
+        </Stack>
     )
 };
 

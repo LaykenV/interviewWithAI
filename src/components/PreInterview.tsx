@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import {Box, Typography} from '@mui/material';
+import { Typography} from '@mui/material';
 import Stack from "@mui/material/Stack";
 import Button from "@mui/material/Button";
 import { useNavigate } from "react-router-dom";

@@ -1,5 +1,4 @@
 import {useState, useEffect} from "react";
-import { LandingPageSection } from "../components/LandingPageSection";
 import Button from "@mui/material/Button";
 import { useTheme } from '@mui/material/styles';
 import { Box, AppBar, Toolbar, Slide, Paper }from "@mui/material";
@@ -27,11 +26,6 @@ const Item = (props:any) => {
 const LandingPage = () => {
     const [modalDisplay, setModalDisplay] = useState(false);
     const theme = useTheme()
-
-    useEffect(() => {
-        console.log(theme.breakpoints.up("md"));
-        
-    }, [])
 
     const openTab = (url:string) => {
         window.open(url);

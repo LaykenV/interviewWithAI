@@ -1,10 +1,10 @@
-import React, { useContext, useState, useEffect } from "react";
+import { useContext, useState, useEffect } from "react";
 import {Stack, useTheme, Chip} from "@mui/material";
 import { interviewContext } from "../interviewContext";
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 const Chips = () => {
-    const { interviewLevel, setInterviewLevel } = useContext(interviewContext);
+    const { setInterviewLevel } = useContext(interviewContext);
     const [selectedChip, setSelectedChip] = useState("Junior");
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
