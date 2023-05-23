@@ -7,6 +7,8 @@ import { Interview } from './pages/Interview';
 import { PostInterview } from './pages/PostInterview';
 import { InterviewProvider } from './interviewContext';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
+import "regenerator-runtime/runtime";
+
 
 /*const darkTheme = createTheme({
   palette: {
