@@ -1,7 +1,7 @@
-import {useState, useEffect} from "react";
+import {useState} from "react";
 import Button from "@mui/material/Button";
 import { useTheme } from '@mui/material/styles';
-import { Box, AppBar, Toolbar, Slide, Paper }from "@mui/material";
+import { Box, AppBar, Toolbar, Paper }from "@mui/material";
 import Stack from "@mui/material/Stack";
 import { PreInterview } from "../components/PreInterview";
 import { Avatar, Typography } from "@mui/material";

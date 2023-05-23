@@ -8,11 +8,11 @@ import { PostInterview } from './pages/PostInterview';
 import { InterviewProvider } from './interviewContext';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
-const darkTheme = createTheme({
+/*const darkTheme = createTheme({
   palette: {
     mode: 'dark',
   },
-});
+});*/
 
 const theme = createTheme();
 
