@@ -53,7 +53,7 @@ const PostInterview = () => {
             <Stack direction="column" justifyContent="flex-start" alignItems="center" sx={{minHeight: "100vh", width: "100vw", gap: "60px", bgcolor: theme.palette.grey[200]}}>
             <AppBar position="static" sx={{bgcolor: theme.palette.primary.main}}>
                 <Toolbar>
-                    <Box sx={{fontSize: "large", color: theme.palette.common.white, flexGrow: 1}} onClick={() => { openTab('')}}>Interview With AI</Box>
+                    <Box sx={{fontSize: "large", color: theme.palette.common.white, flexGrow: 1, cursor: 'pointer'}} onClick={() => { openTab('https://interview-with-ai.vercel.app')}}>Interview With AI</Box>
                     <Stack direction="row" gap="45px">
                         <Avatar src={selfie} sx={{height: "40px", width: "40px", cursor: "pointer"}} onClick={() => { openTab("https://laykenv.github.io/portfolio/") }}></Avatar>
                         <Stack justifyContent="center" alignItems="center">
