@@ -114,7 +114,7 @@ const PostInterview = () => {
                 items.map( (item, i) => <FeedbackItem key={i} item={item} question={questions[i]} answer={answers[i]}/> )
             }
             </Carousel>
-            <Button onClick={() => {openTab('')}} variant="contained">Return Home</Button>
+            <Button onClick={() => {openTab('https://interview-with-ai.vercel.app')}} variant="contained">Return Home</Button>
         </Stack>
     )
 };
