@@ -2,9 +2,9 @@ import React from 'react'
 import ReactDOM from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import './index.css'
-import {LandingPage} from "./pages/LandingPage";
-import { Interview } from './pages/Interview';
-import { PostInterview } from './pages/PostInterview';
+import { LandingPage } from "./pages/LandingPage.tsx";
+import { Interview } from './pages/Interview.tsx';
+import { PostInterview } from './pages/PostInterview.tsx';
 import { InterviewProvider } from './interviewContext';
 import { ThemeProvider, createTheme } from "@mui/material/styles";
 
