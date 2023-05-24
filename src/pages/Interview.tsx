@@ -190,7 +190,7 @@ const Interview = () => {
                     </Stack>
                 </Toolbar>
             </AppBar>
-            <Stack sx={{flexGrow: 1, width: '100%', backgroundColor: theme.palette.grey[200]}} justifyContent='center' alignItems='center'>
+            <Stack sx={{flexGrow: 1, width: '100%', backgroundColor: theme.palette.grey[200], color: theme.palette.common.black}} justifyContent='center' alignItems='center'>
                 <Stack sx={{height: '80%', width: '90%', border: '1px solid lightgray', borderRadius: '5px', backgroundColor: theme.palette.common.white}} justifyContent='flex-start' alignItems='center'>
                     <Stack direction='row' justifyContent='space-between' alignItems='center' sx={{width: '95%', height: '10%'}}>
                         <Box sx={{fontSize: 'small', fontWeight: 'bold'}}>{interviewLevel} {interviewJob} Interview</Box>
