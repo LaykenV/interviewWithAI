@@ -7,7 +7,6 @@ import Carousel from "react-material-ui-carousel";
 import selfie from "../assets/IMG_2253.jpg";
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ReactLoading from 'react-loading';
-import { useHref } from "react-router-dom";
 
 
 
