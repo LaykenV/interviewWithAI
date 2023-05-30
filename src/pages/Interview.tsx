@@ -18,6 +18,7 @@ import MicIcon from '@mui/icons-material/Mic';
 import './css/microphone.css';
 import SendIcon from '@mui/icons-material/Send';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill';
 
 
 
@@ -40,11 +41,15 @@ const Interview = () => {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
 
+    const speechlyID = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3NTcyYWJmYmNjN2YzZmVkZTk0ODkyMDZlZmY0YWM1MTBkOWRkOTZlNWM5NjNjMzE1NDAyNDhhYjNiY2ViOTU3ZGRmNjQ1ZjUxN2M5MGRlZjk5NWY1NDQ3MzBkMGIyNDIzZmM0MzQwZGZhNGFkODQzZTYwMDk2Y2M3ODMwNTUyNiIsInNjb3BlIjoiY29uZmlnIiwiaXNzIjoiaHR0cHM6Ly9hcGkuc3BlZWNobHkuY29tLyIsImF1ZCI6Imh0dHBzOi8vYXBpLnNwZWVjaGx5LmNvbS8ifQ.j-44JQvlvHo7NHHEmIDRV91zrtGhZCOf38mzUdA8CpE';
+    const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(speechlyID);
+    SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition);
+
     useEffect(() => {
         const utterance = new SpeechSynthesisUtterance(questions[questionNumber]);
         const voice = synthesis.getVoices().filter(function (voice) {
             return voice.lang === 'en';
-          })[0];
+          })[1];
         utterance.voice = voice;
         utterance.pitch = 1.5;
         utterance.rate = 1.25;
