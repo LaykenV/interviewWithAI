@@ -41,7 +41,7 @@ const Interview = () => {
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
 
-    const speechlyID = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiI3NTcyYWJmYmNjN2YzZmVkZTk0ODkyMDZlZmY0YWM1MTBkOWRkOTZlNWM5NjNjMzE1NDAyNDhhYjNiY2ViOTU3ZGRmNjQ1ZjUxN2M5MGRlZjk5NWY1NDQ3MzBkMGIyNDIzZmM0MzQwZGZhNGFkODQzZTYwMDk2Y2M3ODMwNTUyNiIsInNjb3BlIjoiY29uZmlnIiwiaXNzIjoiaHR0cHM6Ly9hcGkuc3BlZWNobHkuY29tLyIsImF1ZCI6Imh0dHBzOi8vYXBpLnNwZWVjaGx5LmNvbS8ifQ.j-44JQvlvHo7NHHEmIDRV91zrtGhZCOf38mzUdA8CpE';
+    const speechlyID = '1b4fd6d8-889e-41bc-91f4-68a1fd01724f';
     const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(speechlyID);
     SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition);
 
