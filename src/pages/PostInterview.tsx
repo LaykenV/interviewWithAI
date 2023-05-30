@@ -7,6 +7,7 @@ import Carousel from "react-material-ui-carousel";
 import selfie from "../assets/IMG_2253.jpg";
 import GitHubIcon from '@mui/icons-material/GitHub';
 import ReactLoading from 'react-loading';
+import { useHref } from "react-router-dom";
 
 
 
@@ -100,7 +101,7 @@ const PostInterview = () => {
         <Stack direction="column" justifyContent="flex-start" alignItems="center" sx={{minHeight: "100vh", width: "100vw", gap: "60px", bgcolor: theme.palette.grey[200]}}>
             <AppBar position="static" sx={{bgcolor: theme.palette.primary.main}}>
                 <Toolbar>
-                    <Box sx={{fontSize: "large", color: theme.palette.common.white, flexGrow: 1}} onClick={() => { openTab('https://interview-with-ai.vercel.app')}}>Interview With AI</Box>
+                    <Box sx={{fontSize: "large", color: theme.palette.common.white, flexGrow: 1}} onClick={() => { window.location.href = 'https://interview-with-ai.vercel.app'}}>Interview With AI</Box>
                     <Stack direction="row" gap="45px">
                         <Avatar src={selfie} sx={{height: "40px", width: "40px", cursor: "pointer"}} onClick={() => { openTab("https://laykenv.github.io/portfolio/") }}></Avatar>
                         <Stack justifyContent="center" alignItems="center">
@@ -114,7 +115,7 @@ const PostInterview = () => {
                 items.map( (item, i) => <FeedbackItem key={i} item={item} question={questions[i]} answer={answers[i]}/> )
             }
             </Carousel>
-            <Button onClick={() => {openTab('https://interview-with-ai.vercel.app')}} variant="contained">Return Home</Button>
+            <Button onClick={() => {window.location.href = 'https://interview-with-ai.vercel.app'}} variant="contained">Return Home</Button>
         </Stack>
     )
 };
