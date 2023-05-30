@@ -18,7 +18,6 @@ import MicIcon from '@mui/icons-material/Mic';
 import './css/microphone.css';
 import SendIcon from '@mui/icons-material/Send';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
-import { createSpeechlySpeechRecognition } from '@speechly/speech-recognition-polyfill';
 
 
 
@@ -40,10 +39,6 @@ const Interview = () => {
     const { transcript, listening, resetTranscript } = useSpeechRecognition();
     const theme = useTheme();
     const isMedium = useMediaQuery(theme.breakpoints.down("md"));
-
-    const speechlyID = '1b4fd6d8-889e-41bc-91f4-68a1fd01724f';
-    const SpeechlySpeechRecognition = createSpeechlySpeechRecognition(speechlyID);
-    SpeechRecognition.applyPolyfill(SpeechlySpeechRecognition);
 
     useEffect(() => {
         const utterance = new SpeechSynthesisUtterance(questions[questionNumber]);
